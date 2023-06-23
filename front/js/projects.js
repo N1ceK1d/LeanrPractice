@@ -33,7 +33,7 @@ setTimeout(() => {
         backgroundColor: 'transparent',
 	    title: {
 	    	padding: 10,
-	    	text: "Возраст сотрудников",
+	    	text: "Проекты",
 	    	left: 'center',
 	    },
         tooltip: {
