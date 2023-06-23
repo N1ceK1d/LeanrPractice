@@ -1,0 +1,10 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.info-item {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 10px;
+}

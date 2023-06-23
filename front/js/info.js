@@ -1,51 +1,49 @@
-let chartDom = document.querySelector('.main');
+let employeesCount = document.querySelector(".emp-count");
+let devCount = document.querySelector(".dev-count");
+let midAge = document.querySelector(".mid-age");
+let midTime = document.querySelector(".mid-time");
 
-let company;
+function loadData() {
+	let res = []
+	fetch("http://localhost:4444/api/v1/company/employees")
+	.then(response => response.json())
+    .then(data => res.push(data));
+	return res;
+}
+let emp = loadData()
+//loadData().then(res => emp.push(res));
 
 setTimeout(() => {
-	fetch("http://localhost:4444/api/v1/company/info") 
-	.then(response => response.json())
-	.then(data => company = data);
+	let emps = [];
+	let devs = [];
+	let ages = [];
+	let works = [];
+	for (let i of emp[0]) {
+		
+		emps.push(i);
+		if (i.position == 'Разработчик') {
+			devs.push(i);
+		}
+		ages.push(getYearValue(i.birthdate));
+		works.push(getYearValue(i.hireDate));
+	}
+	employeesCount.textContent = emps.length;
+	devCount.textContent = devs.length;
+	midAge.textContent = getAverage(ages);
+	midTime.textContent = getAverage(works);
+	//console.log(emp);
 }, 300);
-	
-console.log(company);
 
-// инициализируем диаграмму
-let myChart = echarts.init(chartDom);
-// задаем опции диаграммы
-let option = {
-	// в моем случае нужно было поставить прозрачный фон из-за темной темы страницы
-	backgroundColor: 'transparent',
-	//// всплывающее окно при наведении
-  	tooltip: {
-		trigger: 'axis',
-		axisPointer: {
-		type: 'shadow'
-		},
-	},
-	//	// фон окна
-	backgroundColor: '#272b30',
-	// xAxis - определяет, что будет отображаться на оси X диаграммы
-  	xAxis: {
-		// в данном случае категория
-    type: 'category',
-		// определены данные для подписи оси
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-	// xAxis - определяет, что будет отображаться на оси Y диаграммы
-  	yAxis: {
-		// в данном случае значение
-    type: 'value'
-  },
-  	series: [
-    {
-			// а вот и сами данные диаграммы, таким образом
-			// каждое значение соответствует своей категории Mon - 120, Tue - 200 и т.д.
-      data: [120, 200, 150, 80, 70, 110, 130],
-      type: 'bar'
-    }
-  ]
-};
 
-// устанавливаем для экземпляра диаграммы опции
-option && myChart.setOption(option);
+function getYearValue(date) {
+    let d = new Date(date);
+    let c = new Date();
+    
+    return c.getFullYear() - d.getFullYear();
+}
+
+function getAverage(arr) {
+	const sum = arr.reduce((a, b) => a + b, 0);
+	const avg = (sum / arr.length) || 0;
+	return avg.toFixed(1);
+}

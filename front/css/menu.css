@@ -1,0 +1,22 @@
+nav {
+    background-color: rgb(79, 102, 202);
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    border: 1px solid white;
+    padding: 1px 5px;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+nav a:hover {
+    background-color: white;
+    color: rgb(79, 102, 202);
+    transition: .3s;
+}
